@@ -1,0 +1,13 @@
+bug:
+  - "bug"
+  - "error"
+  - "not working"
+documentation:
+  - "documentation"
+  - "docs"
+  - "readme"
+enhancement:
+  - "enhancement"
+  - "feature"
+  - "add"
+  - "implement"
