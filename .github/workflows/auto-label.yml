@@ -13,6 +13,5 @@ jobs:
       - name: Auto-label issues
         uses: actions/labeler@v4
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
           configuration-path: .github/issue-labels.yml
-          enable-versioned-regex: 0
