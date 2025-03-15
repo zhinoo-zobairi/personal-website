@@ -6,7 +6,7 @@ documentation:
   - "documentation"
   - "docs"
   - "readme"
-enhancement:
+enhancement:  # ✅ Fixed spacing
   - "enhancement"
   - "feature"
   - "add"
