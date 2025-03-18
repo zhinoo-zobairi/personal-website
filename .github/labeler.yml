@@ -1,19 +1,14 @@
 critical:
-  - '(?i).*critical.*'
-  - '(?i).*urgent.*'
+  - '(critical|urgent)'
 
-bug:
-  - '(?i).*bug.*'
-  - '(?i).*error.*'
-  - '(?i).*not working.*'
-
-documentation:
-  - '(?i).*documentation.*'
-  - '(?i).*docs.*'
-  - '(?i).*readme.*'
+important:
+  - '(important|high)'
 
 enhancement:
-  - '(?i).*feature.*'
-  - '(?i).*enhancement.*'
-  - '(?i).*add.*'
-  - '(?i).*implement.*'
+  - '(feature|new)'
+
+bug:
+  - '(bug|error|not working)'
+
+documentation:
+  - '(documentation|docs|readme)'
