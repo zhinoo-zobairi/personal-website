@@ -1,13 +1,14 @@
+version: 1
 bug:
-  - '(?i).*\bbug\b.*'
-  - '(?i).*\berror\b.*'
-  - '(?i).*\bnot working\b.*'
+  - '/bug/i'
+  - '/error/i'
+  - '/not working/i'
 documentation:
-  - '(?i).*\bdocumentation\b.*'
-  - '(?i).*\bdocs\b.*'
-  - '(?i).*\breadme\b.*'
+  - '/documentation/i'
+  - '/docs/i'
+  - '/readme/i'
 enhancement:
-  - '(?i).*\benhancement\b.*'
-  - '(?i).*\bfeature\b.*'
-  - '(?i).*\badd\b.*'
-  - '(?i).*\bimplement\b.*'
+  - '/enhancement/i'
+  - '/feature/i'
+  - '/add/i'
+  - '/implement/i'

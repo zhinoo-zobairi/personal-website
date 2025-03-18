@@ -1,20 +1,20 @@
-name: "Auto Label Issues"
-
+name: "Issue Labeler with Versioning"
 on:
   issues:
     types: [opened, edited]
 
 permissions:
   issues: write
+  contents: read
 
 jobs:
-  label-issues:
+  triage:
     runs-on: ubuntu-latest
     steps:
-      - name: Auto-label issues
-        uses: github/issue-labeler@v3.4
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          configuration-path: .github/issue-labels.yml
-          enable-versioned-regex: 0
-          sync-labels: true
+    - uses: github/issue-labeler@v3.4
+      with:
+        configuration-path: .github/issue-labels.yml
+        enable-versioned-regex: 1
+        versioned-regex: 'issue_labeler_regex_version=(\d+)'
+        body-missing-regex-label: 'needs-triage'
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
