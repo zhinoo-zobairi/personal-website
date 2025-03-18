@@ -1,14 +1,14 @@
 version: 1
 bug:
-  - '/bug/i'
-  - '/error/i'
-  - '/not working/i'
+  - '(?i).*bug.*'
+  - '(?i).*error.*'
+  - '(?i).*not working.*'
 documentation:
-  - '/documentation/i'
-  - '/docs/i'
-  - '/readme/i'
+  - '(?i).*documentation.*'
+  - '(?i).*docs.*'
+  - '(?i).*readme.*'
 enhancement:
-  - '/enhancement/i'
-  - '/feature/i'
-  - '/add/i'
-  - '/implement/i'
+  - '(?i).*feature.*'
+  - '(?i).*enhancement.*'
+  - '(?i).*add.*'
+  - '(?i).*implement.*'
