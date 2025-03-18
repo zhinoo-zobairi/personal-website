@@ -1,0 +1,13 @@
+bug:
+  - '(?i).*\bbug\b.*'
+  - '(?i).*\berror\b.*'
+  - '(?i).*\bnot working\b.*'
+documentation:
+  - '(?i).*\bdocumentation\b.*'
+  - '(?i).*\bdocs\b.*'
+  - '(?i).*\breadme\b.*'
+enhancement:
+  - '(?i).*\benhancement\b.*'
+  - '(?i).*\bfeature\b.*'
+  - '(?i).*\badd\b.*'
+  - '(?i).*\bimplement\b.*'
