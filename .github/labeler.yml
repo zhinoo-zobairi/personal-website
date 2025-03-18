@@ -1,2 +1,6 @@
 critical:
   - '(critical|urgent)'
+important:
+  - '(important|high)'
+feauture:
+  - '(feature|new)'
