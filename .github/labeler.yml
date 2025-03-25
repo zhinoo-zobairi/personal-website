@@ -5,7 +5,7 @@ important:
   - '(important|high)'
 
 enhancement:
-  - '(feature|new)'
+  - '(feature|new|implement)'
 
 bug:
   - '(bug|error|not working)'
