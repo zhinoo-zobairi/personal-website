@@ -7,6 +7,7 @@ export async function GET(req) {
     const limit = parseInt(searchParams.get("limit")) || 10;
     const offset = (page - 1) * limit;
     const tagsParam = searchParams.get("tags");
+    const search = searchParams.get("search");
 
     let query = "SELECT * FROM posts";
     let params = [];
@@ -17,6 +18,15 @@ export async function GET(req) {
       params.push(tagList);
       conditions.push(`tags && $${params.length}::text[]`);
     }
+
+    if (search) {
+      const keyword = `%${search}%`;
+      const titleIndex = params.length + 1;
+      const contentIndex = params.length + 2;
+      params.push(keyword, keyword);
+      conditions.push(`(title ILIKE $${titleIndex} OR content ILIKE $${contentIndex})`);
+    }
+
 
     if (conditions.length > 0) {
       query += " WHERE " + conditions.join(" AND ");
