@@ -5,20 +5,25 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 10;
-    const tag = searchParams.get("tag");
     const offset = (page - 1) * limit;
+    const tagsParam = searchParams.get("tags");
 
-    let query;
+    let query = "SELECT * FROM posts";
     let params = [];
-    let paramCount = 1;
+    let conditions = [];
 
-    if (tag) {
-      query = "SELECT * FROM posts WHERE tags @> $1::text[] ORDER BY created_at DESC LIMIT $2 OFFSET $3";
-      params = [[tag], limit, offset];
-    } else {
-      query = "SELECT * FROM posts ORDER BY created_at DESC LIMIT $1 OFFSET $2";
-      params = [limit, offset]; 
+    if (tagsParam) {
+      const tagList = tagsParam.split(",").map(tag => tag.trim());
+      params.push(tagList);
+      conditions.push(`tags && $${params.length}::text[]`);
     }
+
+    if (conditions.length > 0) {
+      query += " WHERE " + conditions.join(" AND ");
+    }
+
+    query += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(limit, offset);
 
     const posts = await executeQuery(query, params);
     return Response.json(posts);
@@ -27,6 +32,7 @@ export async function GET(req) {
     return Response.json({ error: "Database error", details: error.message }, { status: 500 });
   }
 }
+
 export async function POST(req) {
   try {
     const { title, content, tags } = await req.json();
@@ -42,6 +48,7 @@ export async function POST(req) {
 
     return Response.json(result[0]);
   } catch (error) {
+    console.error("Database error:", error);
     return Response.json({ error: "Database error", details: error.message }, { status: 500 });
   }
 }
