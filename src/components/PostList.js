@@ -6,23 +6,33 @@ export default function PostList() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function fetchPosts() {
+      console.log("Fetching posts for:", { page, searchTerm });
       setLoading(true);
-      const res = await fetch(`/api/posts?page=${page}&limit=5`);
+      const res = await fetch(`/api/posts?page=${page}&limit=5&search=${encodeURIComponent(searchTerm)}`);
       const data = await res.json();
       setPosts(data);
       setLoading(false);
     }
 
-    fetchPosts();
-  }, [page]);
+    fetchPosts(
+    );
+  }, [page, searchTerm]);
 
   if (loading) return <p>Loading posts...</p>;
 
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Search posts..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="border px-3 py-2 rounded mb-4 w-full"
+      />
       {posts.map(post => (
         <div key={post.id}>
           <h2>{post.title}</h2>
