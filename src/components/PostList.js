@@ -36,8 +36,8 @@ export default function PostList() {
       ))}
 
       <div>
-        <button onClick={() => setPage(p => Math.max(p - 1, 1))}>Previous</button>
-        <button onClick={() => setPage(p => p + 1)}>Next</button>
+        <button onClick={() => setPage(currentPage => Math.max(currentPage - 1, 1))}>Previous</button>
+        <button onClick={() => setPage(currentPage => currentPage + 1)}>Next</button>
       </div>
     </div>
   );
