@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useDebounce } from "@/hooks/useDebounce";
+
 
 export default function PostList() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebounce(searchTerm, 750);
 
   useEffect(() => {
     async function fetchPosts() {
       console.log("Fetching posts for:", { page, searchTerm });
       setLoading(true);
-      const res = await fetch(`/api/posts?page=${page}&limit=5&search=${encodeURIComponent(searchTerm)}`);
+      const res = await fetch(`/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}`);
       const data = await res.json();
       setPosts(data);
       setLoading(false);
@@ -20,7 +23,7 @@ export default function PostList() {
 
     fetchPosts(
     );
-  }, [page, searchTerm]);
+  }, [page, debouncedSearch]);
 
   if (loading) return <p>Loading posts...</p>;
 
