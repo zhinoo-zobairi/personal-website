@@ -12,15 +12,31 @@ export default function PostList() {
   const debouncedSearch = useDebounce(searchTerm, 750);
 
   useEffect(() => {
+    const controller = new AbortController();
     async function fetchPosts() {
-      console.log("Fetching posts for:", { page, debouncedSearch });
-      setLoading(true);
-      const res = await fetch(`/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}`);
-      const data = await res.json();
-      setPosts(data);
-      setLoading(false);
+      try {
+        console.log("Fetching posts for:", { page, debouncedSearch });
+        setLoading(true);
+        const res = await fetch(
+          `/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}`,
+          { signal: controller.signal }
+        );
+        const data = await res.json();
+        setPosts(data);
+        setLoading(false);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Fetch aborted for:", { page, debouncedSearch });
+        } else {
+          console.error("Error fetching posts:", error);
+          setLoading(false);
+        }
+      }
     }
-    fetchPosts(); //fetch runs once with old page, then again with page=1 only if page !== 1 in the first run
+    fetchPosts(); //fetch runs once with old page, then with the page=1, only if page!==1 in the first run
+    return () => {
+      controller.abort();
+    };
   }, [page, debouncedSearch]);
 
   useEffect(() => {
