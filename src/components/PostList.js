@@ -1,6 +1,7 @@
 'use client';
 import PostCard from "./PostCard";
 import LoadingSpinner from "./LoadingSpinner";
+import CategorySelector from "./CategorySelector";
 import { useEffect, useState } from 'react';
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -11,15 +12,18 @@ export default function PostList() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 750);
+  const availableTags = ["AI", "Frontend", "Backend", "Cloud", "Database", "Security", "Finance"];
+  const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
     async function fetchPosts() {
       try {
-        console.log("Fetching posts for:", { page, debouncedSearch });
+        console.log("Fetching posts for:", { page, debouncedSearch, selectedTag});
         setLoading(true);
+        const tagQuery = selectedTag ? `&tags=${selectedTag}` : "";
         const res = await fetch(
-          `/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}`,
+          `/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}${tagQuery}`,
           { signal: controller.signal }
         );
         const data = await res.json();
@@ -38,7 +42,7 @@ export default function PostList() {
     return () => {
       controller.abort();
     };
-  }, [page, debouncedSearch]);
+  }, [page, debouncedSearch, selectedTag]);
 
   useEffect(() => {
     setPage(1);
@@ -53,7 +57,13 @@ export default function PostList() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="border px-3 py-2 rounded mb-6 w-full"
       />
-      
+      <div className="mb-4">
+        <CategorySelector
+          tags={availableTags}
+          selectedTag={selectedTag}
+          onSelect={(tag) => setSelectedTag(tag)}
+        />
+      </div>
       {loading ? (
         <LoadingSpinner />
       ) : posts.length === 0 ? (
