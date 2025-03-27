@@ -1,5 +1,5 @@
 'use client';
-
+import PostCard from "./PostCard";
 import { useEffect, useState } from 'react';
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -46,27 +46,18 @@ export default function PostList() {
   if (loading) return <p>Loading posts...</p>;
 
   return (
-    <div>
-      <input
+    <div className="max-w-2xl mx-auto p-4">
+      <input 
         type="text"
         placeholder="Search posts..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="border px-3 py-2 rounded mb-4 w-full"
+        className="border px-3 py-2 rounded mb-6 w-full"
       />
       {posts.map(post => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content.slice(0, 100)}...</p>
-          <div>
-            {post.tags.map(tag => (
-              <span key={tag}>#{tag} </span>
-            ))}
-          </div>
-        </div>
+        <PostCard key={post.id} post={post} />
       ))}
-
-      <div>
+      <div className="flex justify-between mt-6">
         <button onClick={() => setPage(currentPage => Math.max(currentPage - 1, 1))}>Previous</button>
         <button onClick={() => setPage(currentPage => currentPage + 1)}>Next</button>
       </div>
