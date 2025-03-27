@@ -13,17 +13,19 @@ export default function PostList() {
 
   useEffect(() => {
     async function fetchPosts() {
-      console.log("Fetching posts for:", { page, searchTerm });
+      console.log("Fetching posts for:", { page, debouncedSearch });
       setLoading(true);
       const res = await fetch(`/api/posts?page=${page}&limit=5&search=${encodeURIComponent(debouncedSearch)}`);
       const data = await res.json();
       setPosts(data);
       setLoading(false);
     }
-
-    fetchPosts(
-    );
+    fetchPosts(); //fetch runs once with old page, then again with page=1 triggered below
   }, [page, debouncedSearch]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]); // Reset page to 1 when the user stopped typing after 750ms, meaning the debounced search term has changed
 
   if (loading) return <p>Loading posts...</p>;
 
