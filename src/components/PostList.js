@@ -20,7 +20,7 @@ export default function PostList() {
       setPosts(data);
       setLoading(false);
     }
-    fetchPosts(); //fetch runs once with old page, then again with page=1 triggered below
+    fetchPosts(); //fetch runs once with old page, then again with page=1 only if page !== 1 in the first run
   }, [page, debouncedSearch]);
 
   useEffect(() => {
