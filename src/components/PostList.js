@@ -12,7 +12,7 @@ export default function PostList() {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearch = useDebounce(searchTerm, 750);
-  const availableTags = ["AI", "Frontend", "Backend", "Cloud", "Database", "Security", "Finance"];
+  const availableTags = ["frontend", "backend", "cloud", "database", "security", "AI", "ML", "finance"];
   const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
@@ -53,10 +53,10 @@ export default function PostList() {
   }, [selectedTag]);
   // Reset page to 1 when the user selects a new tag
   return (
-    <div className="max-w-2xl mx-auto p-4">
-        <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-1">My Learnings</h1>
-        <p className="text-gray-600 mb-4">Curated knowledge from AI to Cloud and beyond</p>
+    <div className="max-w-2xl p-4 mx-auto">
+        <div className="mb-8 text-left">
+        <h1 className="text-4xl font-serif font-extrabold text-grey mb-2">Jînium</h1>
+        <p className="text-md text-gray-500">Curated knowledge all the way from technology to finance</p>
       </div>
         <div className="mb-4">
         <CategorySelector
@@ -65,6 +65,7 @@ export default function PostList() {
           onSelect={(tag) => setSelectedTag(tag)}
         />
       </div>
+      <div className="mb-8">
       <input 
         type="text"
         placeholder="What do you want to read today?"
@@ -72,7 +73,7 @@ export default function PostList() {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="border px-4 py-3 rounded-md shadow-sm focus:outline-none focus:ring w-full"
       />
-      
+      </div>
       {loading ? (
         <LoadingSpinner />
       ) : posts.length === 0 ? (
