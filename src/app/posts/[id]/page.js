@@ -9,12 +9,12 @@ export default async function PostPage({ params }) {
         return <div className="text-center mt-20">Post not found.</div>;
     }
     return (
-        <div className="max-w-2xl mx-auto p-6">
+        <div className="max-w-2xl mx-auto p-6 bg-black">
           <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
           <p className="text-gray-700 mb-6">{post.content}</p>
           <div className="flex flex-wrap gap-2">
             {post.tags.map(tag => (
-              <span key={tag} className="bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-600">#{tag}</span>
+                            <span key={tag} className="bg-white text-black px-3 py-1 rounded-full text-sm">#{tag}</span>
             ))}
           </div>
         </div>

@@ -88,8 +88,7 @@ export default function PostList() {
               {page > 1 && (
                 <button
                   onClick={() => setPage(currentPage => currentPage - 1)}
-                  className="px-4 py-2 rounded text-black hover:underline cursor-pointer"
-                >
+                  className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer"                >
                   Previous
                 </button>
               )}
@@ -97,8 +96,7 @@ export default function PostList() {
             <div>
               <button
                 onClick={() => setPage(currentPage => currentPage + 1)}
-                className="px-4 py-2 rounded text-black hover:underline cursor-pointer"
-              >
+                className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer"              >
                 Next
               </button>
             </div>
