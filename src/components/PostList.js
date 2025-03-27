@@ -48,22 +48,31 @@ export default function PostList() {
     setPage(1);
   }, [debouncedSearch]); // Reset page to 1 when the user stopped typing after 750ms, meaning the debounced search term has changed
 
+  useEffect(() => {
+    setPage(1);
+  }, [selectedTag]);
+  // Reset page to 1 when the user selects a new tag
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <input 
-        type="text"
-        placeholder="Search posts..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="border px-3 py-2 rounded mb-6 w-full"
-      />
-      <div className="mb-4">
+        <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-1">My Learnings</h1>
+        <p className="text-gray-600 mb-4">Curated knowledge from AI to Cloud and beyond</p>
+      </div>
+        <div className="mb-4">
         <CategorySelector
           tags={availableTags}
           selectedTag={selectedTag}
           onSelect={(tag) => setSelectedTag(tag)}
         />
       </div>
+      <input 
+        type="text"
+        placeholder="What do you want to read today?"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="border px-4 py-3 rounded-md shadow-sm focus:outline-none focus:ring w-full"
+      />
+      
       {loading ? (
         <LoadingSpinner />
       ) : posts.length === 0 ? (
