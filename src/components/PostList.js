@@ -84,8 +84,24 @@ export default function PostList() {
             <PostCard key={post.id} post={post} />
           ))}
           <div className="flex justify-between mt-6">
-            <button onClick={() => setPage(currentPage => Math.max(currentPage - 1, 1))}>Previous</button>
-            <button onClick={() => setPage(currentPage => currentPage + 1)}>Next</button>
+            <div>
+              {page > 1 && (
+                <button
+                  onClick={() => setPage(currentPage => currentPage - 1)}
+                  className="px-4 py-2 rounded text-black hover:underline cursor-pointer"
+                >
+                  Previous
+                </button>
+              )}
+            </div>
+            <div>
+              <button
+                onClick={() => setPage(currentPage => currentPage + 1)}
+                className="px-4 py-2 rounded text-black hover:underline cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </>
       )}
