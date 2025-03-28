@@ -77,7 +77,7 @@ export default function PostList() {
       {loading ? (
         <LoadingSpinner />
       ) : posts.length === 0 ? (
-        <p className="text-gray-500 text-center mt-8">No posts found.</p>
+        <p className="text-gray-500 text-center mt-8">  No posts found. Try clearing your filters or searching with different keywords.</p>
       ) : (
         <>
           {posts.map(post => (
@@ -96,6 +96,7 @@ export default function PostList() {
             <div>
               <button
                 onClick={() => setPage(currentPage => currentPage + 1)}
+                disabled={posts.length < 5}
                 className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer"              >
                 Next
               </button>
