@@ -19,11 +19,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body 
-        className="my-dark-theme"
-      >
-        {children}
-      </body>
+      <body className={`${geistSans.variable} my-dark-theme font-serif`}>
+  <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    {children}
+  </div>
+</body>
     </html>
   );
 }

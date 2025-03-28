@@ -56,9 +56,9 @@ export default function PostList() {
     <div className="max-w-2xl p-4 mx-auto">
         <div className="mb-8 text-left">
         <h1 className="text-4xl font-serif font-extrabold text-grey mb-2">Jînium</h1>
-        <p className="text-md text-gray-500">Curated knowledge all the way from technology to finance</p>
+        <p className="text-md text-gray-500 font-serif">Curated knowledge all the way from technology to finance</p>
       </div>
-        <div className="mb-4">
+        <div className="mb-4 font-serif">
         <CategorySelector
           tags={availableTags}
           selectedTag={selectedTag}
@@ -77,7 +77,7 @@ export default function PostList() {
       {loading ? (
         <LoadingSpinner />
       ) : posts.length === 0 ? (
-        <p className="text-gray-500 text-center mt-8">  No posts found. Try clearing your filters or searching with different keywords.</p>
+        <p className="text-gray-500 text-center mt-8 font-serif">  No posts found. Try clearing your filters or searching with different keywords.</p>
       ) : (
         <>
           {posts.map(post => (
@@ -88,7 +88,7 @@ export default function PostList() {
               {page > 1 && (
                 <button
                   onClick={() => setPage(currentPage => currentPage - 1)}
-                  className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer"                >
+                  className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer font-serif"                >
                   Previous
                 </button>
               )}
@@ -97,7 +97,7 @@ export default function PostList() {
               <button
                 onClick={() => setPage(currentPage => currentPage + 1)}
                 disabled={posts.length < 5}
-                className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer"              >
+                className="px-4 py-2 rounded-full bg-white text-black border border-gray-300 hover:bg-gray-100 cursor-pointer font-serif"              >
                 Next
               </button>
             </div>
