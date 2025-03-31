@@ -1,3 +1,11 @@
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -18,12 +26,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ClerkProvider>
     <html lang="en">
-      <body className={`${geistSans.variable} my-dark-theme font-serif`}>
-  <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    {children}
-  </div>
-</body>
+      <body 
+        className="my-dark-theme"
+      >
+        {children}
+      </body>
     </html>
+    </ClerkProvider>
   );
 }

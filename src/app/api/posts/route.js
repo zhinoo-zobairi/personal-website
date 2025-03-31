@@ -14,8 +14,10 @@ export async function GET(req) {
     let conditions = [];
 
     if (tagsParam) {
-      const tagList = tagsParam.split(",").map(tag => tag.trim());
-      params.push(tagList);
+      const parsedTags = tagsParam
+        ? tagsParam.split(',').map(tag => tag.trim()).filter(Boolean)
+        : [];      
+      params.push(parsedTags);
       conditions.push(`tags && $${params.length}::text[]`);
     }
 
@@ -26,7 +28,6 @@ export async function GET(req) {
       params.push(keyword, keyword);
       conditions.push(`(title ILIKE $${titleIndex} OR content ILIKE $${contentIndex})`);
     }
-
 
     if (conditions.length > 0) {
       query += " WHERE " + conditions.join(" AND ");
@@ -45,15 +46,21 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { title, content, tags } = await req.json();
+    const { title, content, tags, image_url } = await req.json();
 
     if (!title || !content) {
       return Response.json({ error: "Title and content are required" }, { status: 400 });
     }
 
+    const parsedTags = tags
+      ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
+      : [];
+
+    const safeImageUrl = image_url?.trim() || null;
+
     const result = await executeQuery(
-      "INSERT INTO posts (title, content, tags) VALUES ($1, $2, $3) RETURNING *",
-      [title, content, tags || []]
+      "INSERT INTO posts (title, content, tags, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
+      [title, content, parsedTags, safeImageUrl]
     );
 
     return Response.json(result[0]);
