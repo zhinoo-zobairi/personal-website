@@ -1,5 +1,6 @@
 import { executeQuery } from "@/lib/db";
-
+import { PostSchema } from "@/validators/post";
+import { auth } from "@clerk/nextjs/server";
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -40,17 +41,28 @@ export async function GET(req) {
     return Response.json(posts);
   } catch (error) {
     console.error("Database error:", error);
-    return Response.json({ error: "Database error", details: error.message }, { status: 500 });
+    return Response.json({ error: "Internal Server Error"}, { status: 500 });
   }
 }
 
 export async function POST(req) {
-  try {
-    const { title, content, tags, image_url } = await req.json();
-
-    if (!title || !content) {
-      return Response.json({ error: "Title and content are required" }, { status: 400 });
+    const { userId } = auth();
+    const allowedUserId = process.env.ADMIN_USER_ID;
+    if (!userId || userId !== allowedUserId) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
+  try {
+    let validated;
+    try {
+        validated = PostSchema.parse(await req.json());
+    } catch (error) {
+        return Response.json(
+            { error: "Invalid input", details: error.errors },
+            { status: 400 }
+        );
+    }
+
+const { title, content, tags, image_url } = validated;
 
     const parsedTags = tags
       ? tags.split(',').map(tag => tag.trim()).filter(Boolean)
@@ -66,6 +78,6 @@ export async function POST(req) {
     return Response.json(result[0]);
   } catch (error) {
     console.error("Database error:", error);
-    return Response.json({ error: "Database error", details: error.message }, { status: 500 });
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
