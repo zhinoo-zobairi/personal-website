@@ -12,10 +12,14 @@ export default function CreatePostPage() {
     e.preventDefault();
 
     try {
+      const resToken = await fetch("/api/csrf");
+      const { csrfToken } = await resToken.json();
+
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken
         },
         body: JSON.stringify({ title, content, tags, image_url: imageUrl })
       });

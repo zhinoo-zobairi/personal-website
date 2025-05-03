@@ -7,13 +7,20 @@ export default async function AdminPage() {
   if (!userId || userId !== allowedUserId) {
     return (
       <div className="text-center mt-32 text-white font-serif">
-        <h1 className="text-3xl font-bold mb-6">Welcome! From here you can manage your posts.</h1>
-        <Link href="/admin/create">
-          <button className="bg-white text-black px-5 py-1 rounded-full hover:bg-gray-200 transition font-medium mt-3">
-            + Create New Post
-          </button>
-        </Link>
+        <h1 className="text-3xl font-bold mb-6">Access Denied</h1>
+        <p>You are not authorized to view this page.</p>
       </div>
     );
   }
+
+  return (
+    <div className="text-center mt-32 text-white font-serif">
+      <h1 className="text-3xl font-bold mb-6">Welcome! From here you can manage your posts.</h1>
+      <Link href="/admin/create">
+        <button className="bg-white text-black px-5 py-1 rounded-full hover:bg-gray-200 transition font-medium mt-3">
+          + Create New Post
+        </button>
+      </Link>
+    </div>
+  );
 }
