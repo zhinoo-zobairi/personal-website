@@ -6,7 +6,7 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
-import { Geist, Geist_Mono } from "next/font/google";;
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,13 +27,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body 
-        className="my-dark-theme"
-      >
-        {children}
-      </body>
-    </html>
+      {/* ERROR: html should not be inside ClerkProvider */}
+      <html lang="en">
+        <body className="my-dark-theme">
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
